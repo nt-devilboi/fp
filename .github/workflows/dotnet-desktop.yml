@@ -16,8 +16,8 @@ jobs:
       with: 
         dotnet-version: 8.0.x
     - name: Set MyStem
+      run: echo "path to mystem $Path"
       env:
-        run: echo "path to mystem $Path"
         Path: "./../../../;"    
     - name: restore dependencies
       run: dotnet restore ./fp.sln
