@@ -1,4 +1,6 @@
 using System.Drawing;
+using TagsCloudVisualization.Abstraction;
+using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization;
@@ -21,7 +23,7 @@ public class CircularCloudLayouter : ICloudLayouter
 
     public Point Start => _tagCloudSettings.Center;
 
-    public Rectangle PutNextRectangle(Size rectangleSize)
+    public Result<Rectangle> PutNextRectangle(Size rectangleSize)
     {
         Rectangle rec;
         do

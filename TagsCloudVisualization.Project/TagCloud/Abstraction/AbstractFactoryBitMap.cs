@@ -31,7 +31,7 @@ public abstract class AbstractFactoryBitMap(TagCloudSettings cloudSettings)
 
     private Result<TagCloudSettings> ValidatePathNamed(TagCloudSettings tagCloudSettings)
         => tagCloudSettings.Validate(t
-            => t.PathDirectory.EndsWith('/'), t => $"Path: {t.PathDirectory}.  Should Be Directory. Add '/' in end");
+            => t.PathDirectory.EndsWith('/'), t => Errors.Image.IsNotDirectory(t.PathDirectory));
 
     private Result<TagCloudSettings> ValidateFullPath(TagCloudSettings tagCloudSettings)
         => tagCloudSettings.Validate(t

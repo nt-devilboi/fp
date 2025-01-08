@@ -125,6 +125,19 @@ public static class Result
             : Fail<TOutput>(input.Error);
     }
 
+    public static Result<TInput> ThenCheck<TInput>(
+        this Result<TInput> input,
+        Func<TInput, Result<TInput>> continuation)
+    {
+        var result = continuation(input.Value);
+        if (!result.IsSuccess)
+        {
+            input.RefineError(result.Error);
+        }
+
+        return input;
+    }
+
     public static Result<TInput> OnFail<TInput>(
         this Result<TInput> input,
         Action<string> handleError)

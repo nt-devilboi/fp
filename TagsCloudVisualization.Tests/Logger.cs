@@ -10,7 +10,7 @@ public class Logger : ILogger
 
     public void WriteLine(string line)
     {
-        _logger.Append(line);
+        _logger.Append(line).Append('`');
     }
 
     public string[] GetData()

@@ -1,4 +1,5 @@
 using SimpleInjector;
+using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Extensions;

@@ -44,22 +44,22 @@ public class LayouterTests
         };
         
         
-        var layoter = new TagsCloudVisualization.CircularCloudLayouter(setting);
+        var layoter = new CircularCloudLayouter(setting);
         var list = new List<Rectangle>();
-        list.Add(layoter.PutNextRectangle(new Size(widthRec1, heightRec1)));
-
-        var rec = layoter.PutNextRectangle(new Size(widthRec2, heightRec2));
+        list.Add(layoter.PutNextRectangle(new Size(widthRec1, heightRec1)).GetValueOrThrow());
+        
+        var rec = layoter.PutNextRectangle(new Size(widthRec2, heightRec2)).GetValueOrThrow();
 
 
         rec.HasNeighbor(list).Should().BeTrue();
     }
 
-    private void CheckAllRectanglesHasNeighbor(TagsCloudVisualization.CircularCloudLayouter layoter)
+    private void CheckAllRectanglesHasNeighbor(CircularCloudLayouter layoter)
     {
         var list = new List<Rectangle>();
         for (var i = 0; i < 30; i++)
         {
-            var cur = layoter.PutNextRectangle(new Size(30, 30));
+            var cur = layoter.PutNextRectangle(new Size(30, 30)).GetValueOrThrow();
             if (list.Count != 0) cur.HasNeighbor(list).Should().BeTrue();
 
             list.Add(cur);

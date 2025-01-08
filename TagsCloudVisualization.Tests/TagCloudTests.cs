@@ -29,7 +29,7 @@ public class TagCloudTests
         var rectangles = new List<Rectangle>();
         for (int i = 0; i < 100; i++)
         {
-            rectangles.Add(circularCloudLayouter.PutNextRectangle(new Size(50, 50)));
+            rectangles.Add(circularCloudLayouter.PutNextRectangle(new Size(50, 50)).GetValueOrThrow());
         }
 
         CheckIntercets(rectangles);

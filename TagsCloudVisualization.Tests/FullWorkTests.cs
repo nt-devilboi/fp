@@ -85,6 +85,54 @@ public class FullWorkTests
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
 
+
+    
+    [Test]
+    public void TagCloudCli_SizeImage_SizeShouldBeMoreForCurrentCountWords()
+    {
+        SetLineForReadLine(
+        [
+            "create",
+            "-s", "920x1222",
+            "-d", "./../../../photos/",
+            "-n", "TestCli",
+            "-w", "./../../../text.txt",
+            "-e", "50",
+            "-c", "yellow",
+            "-b", "white",
+            "-f", "bpm",
+            "-t", "arial"
+        ]);
+
+        _tagCloudCli.Run();
+
+        _logger.GetData()[0].Should().Be(Errors.Image.WordOutSideImage());
+        File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
+    }
+    [Test]
+    public void TagCloudCli_SizeImage_WrongSizeAndPathDir()
+    {
+        SetLineForReadLine(
+        [
+            "create",
+            "-s", "1920x1680",
+            "-d", "./../../../photos",
+            "-n", "TestCli",
+            "-w", "./../../../text.txt",
+            "-e", "50",
+            "-c", "yellow",
+            "-b", "white",
+            "-f", "bpm",
+            "-t", "arial"
+        ]);
+
+        _tagCloudCli.Run();
+
+        _logger.GetData()[0].Should().Be(Errors.Image.IsNotDirectory("./../../../photos"));
+        File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
+    }
+    
+    
     private void SetLineForReadLine(string[] args)
     {
         A.CallTo(() => _inputData.GetArgs())

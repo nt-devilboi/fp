@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Drawing;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
@@ -38,13 +39,31 @@ public class TagCloud(
             var size = sizeWord.GetSizeWord(word.Word, emSize);
             size.Width += 20;
 
-            var rec = cloudLayouter.PutNextRectangle(size);
-            var recCloud = new RectangleTagCloud(rec, word.Word, emSize);
+            var createdRec = cloudLayouter.PutNextRectangle(size).Then(CheckRecInImage);
+            if (!createdRec.IsSuccess) return Result.Result.Fail<ITagCloudSave>(createdRec.Error);
+            
+            var recCloud = new RectangleTagCloud(createdRec.GetValueOrThrow(), word.Word, emSize);
             data.tagCloudImage.DrawString(recCloud);
             emSize = emSize > 14 ? emSize - 1 : 24;
         }
 
         return ((ITagCloudSave)data.tagCloudImage).AsResult();
+    }
+
+ 
+
+    private Result<Rectangle> CheckRecInImage(Rectangle rectangle)
+    {
+        if (rectangle.Right > tagCloudSettings.Size.Width ||
+            rectangle.Bottom > tagCloudSettings.Size.Height ||
+            rectangle.Left < 0 ||
+            rectangle.Top < 0)
+        {
+           return Result.Result.Fail<Rectangle>(Errors.Image.WordOutSideImage());
+        }
+
+
+        return rectangle.AsResult();
     }
 
 
