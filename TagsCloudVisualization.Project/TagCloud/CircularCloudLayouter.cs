@@ -1,4 +1,5 @@
 using System.Drawing;
+using Microsoft.AspNetCore.Http.HttpResults;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
@@ -13,17 +14,20 @@ internal class CircularCloudLayouter : ICloudLayouter
     private readonly TagCloudSettings _tagCloudSettings;
     private double _angle;
 
-    public CircularCloudLayouter(TagCloudSettings appSettings)
+    public CircularCloudLayouter(TagCloudSettings tagCloudSettings)
     {
-        Validate(appSettings.Center);
+        Validate(tagCloudSettings.Center);
         _rectangles = [];
-        _tagCloudSettings = appSettings;
+        _tagCloudSettings = tagCloudSettings;
     }
 
     public Point Start => _tagCloudSettings.Center;
 
     public Result<Rectangle> PutNextRectangle(Size rectangleSize)
     {
+        var result = Validate(_tagCloudSettings.Center);
+        if (!result.IsSuccess) return Result.Result.Fail<Rectangle>(result.Error);
+
         Rectangle rec;
         do
         {
@@ -39,10 +43,20 @@ internal class CircularCloudLayouter : ICloudLayouter
         return rec;
     }
 
-    private static void Validate(Point center)
+    private static Result<None> Validate(Point center)
     {
-        if (center.X < 0) throw new ArgumentException("X has value less than 0");
-        if (center.Y < 0) throw new ArgumentException("Y has value less than 0");
+        var result = Result.Result.Fail<None>("");
+        if (center.X < 0)
+        {
+            result.RefineError("X has value less than 0");
+        }
+
+        if (center.Y < 0)
+        {
+            result.RefineError("Y has value less than 0");
+        }
+
+        return string.IsNullOrEmpty(result.Error) ? Result.Result.Ok() : result;
     }
 
     private Rectangle Sealing(Rectangle rec)
