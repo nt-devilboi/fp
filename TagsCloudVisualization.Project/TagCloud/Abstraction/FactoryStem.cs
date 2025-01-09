@@ -21,7 +21,7 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
 
     private Result<WordLoaderSettings> ValidTextFile(WordLoaderSettings settings)
     {
-        return settings.Validate(x => File.Exists(x.PathTextFile), x => $"this not file with text  {x.PathTextFile}");
+        return settings.Validate(x => File.Exists(x.PathTextFile), x => $"File don't exists by dir  {x.PathTextFile}");
     }
 
     private Result<WordLoaderSettings> ValidateMyStem(WordLoaderSettings settings)
