@@ -1,15 +1,8 @@
 namespace TagsCloudVisualization.Result;
 
-public class None
-{
-    private None()
-    {
-    }
-}
-
 public struct Result<T>
 {
-    public Result(string error, T value = default(T))
+    public Result(string error, T value = default)
     {
         Error = error;
         Value = value;
@@ -112,7 +105,6 @@ public static class Result
             : Fail<TOutput>(input.Error);
     }
 
-   
 
     public static Result<TInput> OnFail<TInput>(
         this Result<TInput> input,

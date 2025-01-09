@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Drawing;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Result;
@@ -16,9 +15,7 @@ public class TagCloud(
     {
         if (cloudLayouter.Start.Y > tagCloudImage.Size().Height ||
             cloudLayouter.Start.X > tagCloudImage.Size().Width)
-        {
             return new Result<ITagCloudImage>("the start position is abroad of image");
-        }
 
         return tagCloudImage.AsResult();
     }
@@ -41,7 +38,7 @@ public class TagCloud(
 
             var createdRec = cloudLayouter.PutNextRectangle(size).Then(CheckRecInImage);
             if (!createdRec.IsSuccess) return Result.Result.Fail<ITagCloudSave>(createdRec.Error);
-            
+
             var recCloud = new RectangleTagCloud(createdRec.GetValueOrThrow(), word.Word, emSize);
             data.tagCloudImage.DrawString(recCloud);
             emSize = emSize > 14 ? emSize - 1 : 24;
@@ -50,7 +47,6 @@ public class TagCloud(
         return ((ITagCloudSave)data.tagCloudImage).AsResult();
     }
 
- 
 
     private Result<Rectangle> CheckRecInImage(Rectangle rectangle)
     {
@@ -58,9 +54,7 @@ public class TagCloud(
             rectangle.Bottom > tagCloudSettings.Size.Height ||
             rectangle.Left < 0 ||
             rectangle.Top < 0)
-        {
-           return Result.Result.Fail<Rectangle>(Errors.Image.WordOutSideImage());
-        }
+            return Result.Result.Fail<Rectangle>(Errors.Image.WordOutSideImage());
 
 
         return rectangle.AsResult();
@@ -72,10 +66,8 @@ public class TagCloud(
         var words = wordLoader.LoadWords().ToList();
 
         if (words.Count == 0)
-        {
             return Result.Result.Fail<(ITagCloudImage, IEnumerable<FrequencyWord>)>(
                 Errors.Stem.TextIsEmptyOrOnlyBoringWords());
-        }
 
         words.Sort((prev, cur) => cur.Count.CompareTo(prev.Count));
         return (tagCloudImage, words);

@@ -1,16 +1,18 @@
 using System.Drawing;
+using System.Runtime.Versioning;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Settings;
 
-namespace TagCloud2.Infrastructure;
+namespace TagsCloudVisualization;
 
+[SupportedOSPlatform("windows")]
 internal class MeasureString(TagCloudSettings tagCloudSettings) : ISizeWord
 {
-    private readonly Graphics _graphics = Graphics.FromImage(new Bitmap(1, 1));
+    private readonly Graphics graphics = Graphics.FromImage(new Bitmap(1, 1));
 
     public Size GetSizeWord(string word, int emSize)
     {
-        return _graphics.MeasureString(word, GetFont(emSize)).ToSize();
+        return graphics.MeasureString(word, GetFont(emSize)).ToSize();
     }
 
     private Font GetFont(int emSize)

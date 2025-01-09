@@ -6,8 +6,8 @@ namespace TagsCloudVisualization;
 
 internal sealed class StemReader : IStemReader
 {
-    private readonly Process _process;
-    private readonly StreamReader _streamReader;
+    private readonly Process process;
+    private readonly StreamReader streamReader;
 
     public StemReader(WordLoaderSettings wordLoaderSettings)
     {
@@ -25,24 +25,24 @@ internal sealed class StemReader : IStemReader
         };
 
 
-        _process = stem;
-        _process.Start();
-        _streamReader = _process.StandardOutput;
+        process = stem;
+        process.Start();
+        streamReader = process.StandardOutput;
     }
 
     public void Dispose()
     {
-        _process.Close();
+        process.Close();
     }
 
-    public string ReadLine()
+    public string? ReadLine()
     {
-        return _streamReader.ReadLine();
+        return streamReader.ReadLine();
     }
 
     public IEnumerable<string> ReadLines()
     {
-        var line = _streamReader.ReadLine();
+        var line = streamReader.ReadLine();
         while (line != null)
         {
             yield return line.ToLower();

@@ -3,7 +3,6 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization;
 
-
 // паттерн фабричный метод собственной персоной
 internal sealed class FactoryBitMap(TagCloudSettings cloudSettings) : AbstractFactoryBitMap(cloudSettings)
 {

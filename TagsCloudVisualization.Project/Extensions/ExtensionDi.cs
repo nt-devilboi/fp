@@ -1,5 +1,4 @@
 using SimpleInjector;
-using TagCloud2.Infrastructure;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Settings;
 
@@ -39,7 +38,7 @@ public static class ExtensionDi
 
     public static Container RegisterTagCloud(this Container container)
     {
-        container.Register<TagCloud>();
+        container.Register<TagCloud>(Lifestyle.Singleton);
 
         return container;
     }

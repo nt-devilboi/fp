@@ -1,7 +1,6 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using FluentAssertions;
-using TagsCloudVisualization;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Test;

@@ -1,10 +1,8 @@
-using System.Runtime.CompilerServices;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Abstraction;
-
 
 // забавно но internal здесь не работает 
 public class FactoryStem(WordLoaderSettings wordLoaderSettings)
@@ -27,7 +25,9 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
     }
 
     private Result<WordLoaderSettings> ValidateMyStem(WordLoaderSettings settings)
-        => settings.Validate(x => StemExists(), x => Errors.Stem.NotFoundInEnvVar());
+    {
+        return settings.Validate(x => StemExists(), x => Errors.Stem.NotFoundInEnvVar());
+    }
 
 
     private static bool StemExists()
