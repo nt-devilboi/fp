@@ -8,7 +8,7 @@ using TagsCloudVisualization.Settings;
 
 namespace TagCloud2;
 
-public class TagCloudCli(
+internal sealed class TagCloudCli(
     TagCloud tagCloud,
     AppSettings appSettings,
     AbstractFactoryBitMap factoryCloudBitMap,

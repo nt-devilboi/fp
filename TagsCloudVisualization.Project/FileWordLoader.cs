@@ -3,7 +3,7 @@ using TagsCloudVisualization.Extensions;
 
 namespace TagsCloudVisualization;
 
-public class FileWordLoader(
+internal sealed class FileWordLoader(
     FactoryStem steamReader)
     : IWordLoader
 {

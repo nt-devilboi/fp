@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.Settings;
@@ -20,12 +21,12 @@ public class TagCloudTests
             PathDirectory = PathDir,
             NamePhoto = NameFile
         };
-  }
+    }
 
     [Test]
     public void CreateTagCloud_WithoutIntersect()
     {
-        var circularCloudLayouter = new TagsCloudVisualization.CircularCloudLayouter(_settings);
+        var circularCloudLayouter = new CircularCloudLayouter(_settings);
         var rectangles = new List<Rectangle>();
         for (int i = 0; i < 100; i++)
         {
@@ -43,11 +44,16 @@ public class TagCloudTests
         {
             Size = new Size(-3, -2),
             PathDirectory = PathDir,
-            NamePhoto = NameFile
+            NamePhoto = NameFile,
+            Font = "arial",
+            BackGround = Color.Black,
+            ColorWords = Color.White,
+            EmSize = 50,
+            ImageFormat = ImageFormat.Png
         };
         var abstractFac = new FactoryBitMap(_settings);
         var result = abstractFac.Create();
-        result.Error.Should().Be(Errors.Image.SizeLessThanZero(size));
+        result.Error.Should().Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.SizeLessThanZero(size));
     }
 
     [TearDown]

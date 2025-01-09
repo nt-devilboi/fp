@@ -5,7 +5,7 @@ namespace TagsCloudVisualization;
 
 
 // паттерн фабричный метод собственной персоной
-public class FactoryBitMap(TagCloudSettings cloudSettings) : AbstractFactoryBitMap(cloudSettings)
+internal sealed class FactoryBitMap(TagCloudSettings cloudSettings) : AbstractFactoryBitMap(cloudSettings)
 {
     protected override ITagCloudImage CreateBitMap(TagCloudSettings tagCloudSettings)
     {

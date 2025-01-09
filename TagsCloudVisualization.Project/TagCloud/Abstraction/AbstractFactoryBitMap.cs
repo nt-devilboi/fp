@@ -11,12 +11,13 @@ public abstract class AbstractFactoryBitMap(TagCloudSettings cloudSettings)
 
     public Result<ITagCloudImage> Create()
     {
-        return ValidateDirectory(cloudSettings)
+        return cloudSettings.AsResult().Then(ValidatePathNamed)
             .Then(ValidateSizeImage)
             .Then(ValidateFullPath)
-            .Then(ValidatePathNamed)
+            .Then(ValidateDirectory)
             .Then(FontExists)
-            .Then(CreateBitMap);
+            .Then(CreateBitMap)
+            .RefineError("image has bad settings");
     }
 
     private Result<TagCloudSettings> ValidateDirectory(TagCloudSettings tagCloudSettings) =>

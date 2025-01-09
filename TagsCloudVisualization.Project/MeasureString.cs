@@ -4,7 +4,7 @@ using TagsCloudVisualization.Settings;
 
 namespace TagCloud2.Infrastructure;
 
-public class MeasureString(TagCloudSettings tagCloudSettings) : ISizeWord
+internal class MeasureString(TagCloudSettings tagCloudSettings) : ISizeWord
 {
     private readonly Graphics _graphics = Graphics.FromImage(new Bitmap(1, 1));
 

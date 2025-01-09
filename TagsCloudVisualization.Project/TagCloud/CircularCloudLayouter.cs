@@ -6,7 +6,7 @@ using TagsCloudVisualization.Settings;
 namespace TagsCloudVisualization;
 
 
-public class CircularCloudLayouter : ICloudLayouter
+internal class CircularCloudLayouter : ICloudLayouter
 {
     private const double CoefficientRadius = 1.3;
     private const int CoefficientAngle = 14;

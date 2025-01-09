@@ -21,9 +21,10 @@ public class CloudBitMapTests
 
         var fac = new FactoryBitMap(settings);
 
-        fac.Create().Error.Should().Be($"This directory not exists  {settings.PathDirectory}");
+        fac.Create().Error.Should()
+            .Be(Errors.Image.ScopeMessage() + ". " + $"This directory not exists  {settings.PathDirectory}");
     }
- 
+
     [Test]
     public void CloudBitMap_ShouldBe_SizeWithPositiveNumbers()
     {
@@ -50,12 +51,13 @@ public class CloudBitMapTests
             ImageFormat = ImageFormat.Png
         };
         var cloudBitMap = new CloudBitMap(settings);
-        
+
         cloudBitMap.Save();
-        
+
         File.Exists(filePath + "tagCloud-(notIntersect).png").Should().BeTrue();
         File.Delete(filePath + "tagCloud-(notIntersect).png");
     }
+
     [Test]
     public void CloudBitMap_ShouldBe_CreatePhotoBmp()
     {
@@ -68,9 +70,9 @@ public class CloudBitMapTests
             ImageFormat = ImageFormat.Bmp
         };
         var cloudBitMap = new CloudBitMap(settings);
-        
+
         cloudBitMap.Save();
-        
+
         File.Exists(filePath + "tagCloud-(notIntersect).Bmp").Should().BeTrue();
         File.Delete(filePath + "tagCloud-(notIntersect).Bmp");
     }

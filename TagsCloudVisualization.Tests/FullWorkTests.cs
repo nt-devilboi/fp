@@ -81,12 +81,12 @@ public class FullWorkTests
 
         _tagCloudCli.Run();
 
-        _logger.GetData()[0].Should().Be(Errors.Image.SizeLessThanZero(new Size(0, 0)));
+        _logger.GetData()[0].Should()
+            .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.SizeLessThanZero(new Size(0, 0)));
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
 
 
-    
     [Test]
     public void TagCloudCli_SizeImage_SizeShouldBeMoreForCurrentCountWords()
     {
@@ -109,13 +109,14 @@ public class FullWorkTests
         _logger.GetData()[0].Should().Be(Errors.Image.WordOutSideImage());
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
+
     [Test]
     public void TagCloudCli_SizeImage_WrongSizeAndPathDir()
     {
         SetLineForReadLine(
         [
             "create",
-            "-s", "1920x1680",
+            "-s", "0x1680",
             "-d", "./../../../photos",
             "-n", "TestCli",
             "-w", "./../../../text.txt",
@@ -128,11 +129,12 @@ public class FullWorkTests
 
         _tagCloudCli.Run();
 
-        _logger.GetData()[0].Should().Be(Errors.Image.IsNotDirectory("./../../../photos"));
+        _logger.GetData()[0].Should()
+            .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.IsNotDirectory("./../../../photos"));
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
-    
-    
+
+
     private void SetLineForReadLine(string[] args)
     {
         A.CallTo(() => _inputData.GetArgs())

@@ -30,8 +30,6 @@ public struct Result<T>
     }
 
     public bool IsSuccess => Error == null;
-
-
 }
 
 public static class Result
@@ -68,10 +66,6 @@ public static class Result
         }
     }
 
-    public static Result<None> Then<T>(this Result<None> result, Func<Result<None>> validateSizeImage)
-    { 
-        return validateSizeImage();
-    }
 
     public static Result<None> OfAction(Action f, string error = null)
     {
@@ -93,21 +87,14 @@ public static class Result
         return input.Then(inp => Of(() => continuation(inp)));
     }
 
-    public static Result<TOutput> Then<TOutput>(
-        this Result<None> input,
-        Func<TOutput> continuation)
-    {
-        return continuation();
-    }
-    
+
     public static Result<TOutput> Then<TOutput>(
         this Result<None> input,
         Func<Result<TOutput>> continuation)
     {
-        return input.IsSuccess ? continuation() : 
-            Fail<TOutput>(input.Error);
+        return input.IsSuccess ? continuation() : Fail<TOutput>(input.Error);
     }
-    
+
     public static Result<None> Then<TInput>(
         this Result<TInput> input,
         Action<TInput> continuation)
@@ -115,7 +102,7 @@ public static class Result
         return input.Then(inp => OfAction(() => continuation(inp)));
     }
 
-    
+
     public static Result<TOutput> Then<TInput, TOutput>(
         this Result<TInput> input,
         Func<TInput, Result<TOutput>> continuation)
@@ -125,18 +112,7 @@ public static class Result
             : Fail<TOutput>(input.Error);
     }
 
-    public static Result<TInput> ThenCheck<TInput>(
-        this Result<TInput> input,
-        Func<TInput, Result<TInput>> continuation)
-    {
-        var result = continuation(input.Value);
-        if (!result.IsSuccess)
-        {
-            input.RefineError(result.Error);
-        }
-
-        return input;
-    }
+   
 
     public static Result<TInput> OnFail<TInput>(
         this Result<TInput> input,

@@ -4,7 +4,7 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization;
 
-public sealed class StemReader : IStemReader
+internal sealed class StemReader : IStemReader
 {
     private readonly Process _process;
     private readonly StreamReader _streamReader;

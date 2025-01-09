@@ -4,8 +4,9 @@ namespace TagsCloudVisualization;
 
 public class ImageErrors
 {
+    public string ScopeMessage() => "image has bad settings";
     public string SizeLessThanZero(Size size)
-        => $"Size of image should be with positive number, now {size}";
+        => "Size of image should be with positive number, now {size}";
 
     public string FontNotExists(string font)
         => $"Font: '{font}' not exists";

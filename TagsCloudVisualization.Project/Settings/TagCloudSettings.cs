@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization.Settings;
 
-public class TagCloudSettings
+public sealed class TagCloudSettings
 {
     public Size Size { get; set; }
 
