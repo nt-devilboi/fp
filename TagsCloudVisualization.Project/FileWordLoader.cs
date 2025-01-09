@@ -1,15 +1,22 @@
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Extensions;
+using TagsCloudVisualization.Result;
 
 namespace TagsCloudVisualization;
 
 internal sealed class FileWordLoader(
-    FactoryStem steamReader)
+    FactoryStem FactorysteamReader)
     : IWordLoader
 {
-    public IEnumerable<FrequencyWord> LoadWords()
+    public Result<ICollection<FrequencyWord>> LoadWords()
     {
-        return steamReader.Create().GetValueOrThrow()
+        return FactorysteamReader.Create()
+            .Then(Processing);
+    }
+
+    private static ICollection<FrequencyWord> Processing(IStemReader stemReader)
+    {
+        return stemReader
             .ReadLines()
             .Where(ValidateLexeme)
             .Select(GetLemma)

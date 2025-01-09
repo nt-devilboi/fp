@@ -19,10 +19,7 @@ public class ImageErrors
         return $"Font: '{font}' not exists";
     }
 
-    public string WordOutSideImage()
-    {
-        return "The image is small for current count words";
-    }
+    
 
     public string IsNotDirectory(string path)
     {

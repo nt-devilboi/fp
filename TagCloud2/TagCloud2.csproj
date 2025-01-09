@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Extensions\" />
         <Folder Include="Pho tos\"/>
     </ItemGroup>
 
@@ -23,6 +24,10 @@
         <PackageReference Include="CommandLineParser" Version="2.9.1"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0"/>
         <PackageReference Include="SimpleInjector" Version="5.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Extensions\OptionsExtensions.cs" />
     </ItemGroup>
 
 </Project>

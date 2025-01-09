@@ -1,6 +1,8 @@
+using TagsCloudVisualization.Result;
+
 namespace TagsCloudVisualization;
 
 public interface IWordLoader
 {
-    IEnumerable<FrequencyWord> LoadWords();
+    Result<ICollection<FrequencyWord>> LoadWords();
 }

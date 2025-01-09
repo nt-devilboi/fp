@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Drawing;
+using Microsoft.AspNetCore.Http.HttpResults;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
@@ -24,11 +26,12 @@ public class TagCloud(
     {
         return Validate(cloudLayouter, tagCloudImage)
             .Then(LoadWord)
-            .Then(AddWordInCloud);
+            .Then(AddWordInCloud)
+            .RefineError("Generate cloud error");
     }
 
     private Result<ITagCloudSave> AddWordInCloud(
-        (ITagCloudImage tagCloudImage, IEnumerable<FrequencyWord> words) data)
+        (ITagCloudImage tagCloudImage, ICollection<FrequencyWord> words) data)
     {
         var emSize = tagCloudSettings.EmSize;
         foreach (var word in data.words)
@@ -54,22 +57,36 @@ public class TagCloud(
             rectangle.Bottom > tagCloudSettings.Size.Height ||
             rectangle.Left < 0 ||
             rectangle.Top < 0)
-            return Result.Result.Fail<Rectangle>(Errors.Image.WordOutSideImage());
+            return Result.Result.Fail<Rectangle>(Errors.Cloud.WordOutsideImage());
 
 
         return rectangle.AsResult();
     }
 
 
-    private Result<(ITagCloudImage, IEnumerable<FrequencyWord>)> LoadWord(ITagCloudImage tagCloudImage)
+    private Result<(ITagCloudImage, ICollection<FrequencyWord>)> LoadWord(ITagCloudImage tagCloudImage)
     {
-        var words = wordLoader.LoadWords().ToList();
+       return wordLoader.LoadWords()
+            .Then(NotEmpty)
+            .Then(Sort)
+            .Then(c => (tagCloudImage, c));
+    }
 
+
+    private ICollection<FrequencyWord> Sort(ICollection<FrequencyWord> words)
+    {
+        var wordsSort = words.ToList();
+
+        wordsSort.Sort((prev, cur) => cur.Count.CompareTo(prev.Count));
+        return wordsSort;
+    }
+
+    private Result<ICollection<FrequencyWord>> NotEmpty(ICollection<FrequencyWord> words)
+    {
         if (words.Count == 0)
-            return Result.Result.Fail<(ITagCloudImage, IEnumerable<FrequencyWord>)>(
+            return Result.Result.Fail<ICollection<FrequencyWord>>(
                 Errors.Stem.TextIsEmptyOrOnlyBoringWords());
 
-        words.Sort((prev, cur) => cur.Count.CompareTo(prev.Count));
-        return (tagCloudImage, words);
+        return Result.Result.Ok(words);
     }
 }

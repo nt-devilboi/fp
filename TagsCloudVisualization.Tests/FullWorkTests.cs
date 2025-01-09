@@ -106,7 +106,7 @@ public class FullWorkTests
 
         _tagCloudCli.Run();
 
-        _logger.GetData()[0].Should().Be(Errors.Image.WordOutSideImage());
+        _logger.GetData()[0].Should().Be(Errors.Cloud.ScopeMessage() + ". "+Errors.Cloud.WordOutsideImage());
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
 

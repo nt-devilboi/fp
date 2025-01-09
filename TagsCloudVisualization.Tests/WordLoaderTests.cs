@@ -24,7 +24,7 @@ public class WordLoaderTests
     public void WordLoader_LoadWord()
     {
        SetWords(["hello", "hello"]);
-        var words = _fileWordLoader.LoadWords().ToArray();
+        var words = _fileWordLoader.LoadWords().Value.ToArray();
 
         words[0].Should().BeEquivalentTo(new FrequencyWord("hello", 2));
     }
@@ -34,7 +34,7 @@ public class WordLoaderTests
     {
        SetWords([]);
 
-        var words = _fileWordLoader.LoadWords();
+        var words = _fileWordLoader.LoadWords().Value.ToArray();
         words.Should().BeEmpty();
     }
 
@@ -42,7 +42,7 @@ public class WordLoaderTests
     public void WordLoader_WordInLowerCase()
     {
         SetWords(["HELLO", "hello"]);
-        var words = _fileWordLoader.LoadWords().ToArray();
+        var words = _fileWordLoader.LoadWords().Value.ToArray();
 
         words[0].Should().BeEquivalentTo(new FrequencyWord("hello", 2));
     }
@@ -52,7 +52,7 @@ public class WordLoaderTests
     public void WordLoader_CheckWithTwoWord()
     {
         SetWords(["hello", "hello", "andrey"]);
-        var words = _fileWordLoader.LoadWords().ToArray();
+        var words = _fileWordLoader.LoadWords().Value.ToArray();
 
         words[0].Should().BeEquivalentTo(new FrequencyWord("hello", 2));
         words[1].Should().BeEquivalentTo(new FrequencyWord("andrey", 1));
@@ -69,7 +69,7 @@ public class WordLoaderTests
             "andrey", "от=PR="
         ]);
 
-        var words = _fileWordLoader.LoadWords().ToArray();
+        var words = _fileWordLoader.LoadWords().Value.ToArray();
         words[0].Should().BeEquivalentTo(new FrequencyWord("hello", 1));
         words[1].Should().BeEquivalentTo(new FrequencyWord("andrey", 1));
         words.Length.Should().Be(2);

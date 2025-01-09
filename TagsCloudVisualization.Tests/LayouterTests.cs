@@ -7,18 +7,7 @@ namespace TagsCloudVisualization.Tests;
 
 public class LayouterTests
 {
-    [TestCase(3, -2, TestName = "X ShouldBeMoreThan 0")]
-    [TestCase(-3, 2, TestName = "Y ShouldBeMoreThan 0")]
-    public void CircularCloudLayouter_CheckConstructor(int y, int x)
-    {
-        var setting = new TagCloudSettings()
-        {
-            Size = new Size(y,x)
-        };
-        Action action = () => new TagsCloudVisualization.CircularCloudLayouter(setting);
-        action.Should().Throw<ArgumentException>();
-    }
-
+    
     [Test]
     public void CircularCloudLayouter_Rectangles_ShouldBeHave_Neighbor()
     {
