@@ -1,6 +1,5 @@
 using System.Text;
 using TagCloud2.Abstract;
-using static System.String;
 
 namespace TagsCloudVisualization.Test;
 

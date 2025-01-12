@@ -7,8 +7,8 @@ namespace TagsCloudVisualization.Tests;
 
 public class WordLoaderTests
 {
-    private FileWordLoader _fileWordLoader;
     private IStemReader _fakeStemReader;
+    private FileWordLoader _fileWordLoader;
 
     [SetUp]
     public void SetUp()
@@ -23,7 +23,7 @@ public class WordLoaderTests
     [Test]
     public void WordLoader_LoadWord()
     {
-       SetWords(["hello", "hello"]);
+        SetWords(["hello", "hello"]);
         var words = _fileWordLoader.LoadWords().Value.ToArray();
 
         words[0].Should().BeEquivalentTo(new FrequencyWord("hello", 2));
@@ -32,7 +32,7 @@ public class WordLoaderTests
     [Test]
     public void WordLoader_WordNotInDic()
     {
-       SetWords([]);
+        SetWords([]);
 
         var words = _fileWordLoader.LoadWords().Value.ToArray();
         words.Should().BeEmpty();

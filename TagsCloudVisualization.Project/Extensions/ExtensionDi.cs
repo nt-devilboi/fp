@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.Extensions;
 
 public static class ExtensionDi
 {
-    // по сути, можно было бы добавить дополнительный интерйс, чтоб работать не с Continer на прямую, но так как создавать мне лень. я его и не сделал.
+    // по сути, можно было бы добавить дополнительный интерйс, чтоб работать не с Continer на прямую, но так как создавать мне лень. я его и не сделал. (иначе говоря, это overhead)
     public static Container RegisterSettingsCloud(this Container container)
     {
         container.Register<AppSettings>(Lifestyle.Singleton);

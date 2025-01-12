@@ -15,7 +15,7 @@ public class TagCloudTests
     [SetUp]
     public void Setup()
     {
-        _settings = new TagCloudSettings()
+        _settings = new TagCloudSettings
         {
             Size = new Size(1000, 1000),
             PathDirectory = PathDir,
@@ -28,10 +28,8 @@ public class TagCloudTests
     {
         var circularCloudLayouter = new CircularCloudLayouter(_settings);
         var rectangles = new List<Rectangle>();
-        for (int i = 0; i < 100; i++)
-        {
+        for (var i = 0; i < 100; i++)
             rectangles.Add(circularCloudLayouter.PutNextRectangle(new Size(50, 50)).GetValueOrThrow());
-        }
 
         CheckIntercets(rectangles);
     }
@@ -40,7 +38,7 @@ public class TagCloudTests
     public void TagCloud_StartPosition_ShouldBe_In_Image()
     {
         var size = new Size(-3, -2);
-        _settings = new TagCloudSettings()
+        _settings = new TagCloudSettings
         {
             Size = new Size(-3, -2),
             PathDirectory = PathDir,
@@ -61,18 +59,14 @@ public class TagCloudTests
     {
         if (TestContext.CurrentContext.Result.Outcome == ResultState.Failure &&
             TestContext.CurrentContext.Test.MethodName!.StartsWith("Create"))
-        {
             TestContext.WriteLine($"Tag cloud visualization saved to file {NameFile}/" +
                                   $" {TestContext.CurrentContext.Test.MethodName}");
-        }
     }
 
     private static void CheckIntercets(List<Rectangle> rectangles)
     {
-        for (int i = 0; i < rectangles.Count; i++)
-        for (int j = i + 1; j < rectangles.Count; j++)
-        {
+        for (var i = 0; i < rectangles.Count; i++)
+        for (var j = i + 1; j < rectangles.Count; j++)
             rectangles[i].IntersectsWith(rectangles[j]).Should().BeFalse();
-        }
     }
 }

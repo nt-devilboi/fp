@@ -11,7 +11,7 @@ public class CloudBitMapTests
     public void CloudBitMap_DirectoryShouldBeExist()
     {
         var filePath = "./../../../OuterWild/";
-        var settings = new TagCloudSettings()
+        var settings = new TagCloudSettings
         {
             Size = new Size(5, 5),
             PathDirectory = filePath,
@@ -28,7 +28,7 @@ public class CloudBitMapTests
     public void CloudBitMap_ShouldBe_SizeWithPositiveNumbers()
     {
         var filePath = "./../../../photos/notIntersect-50.png";
-        var settings = new TagCloudSettings()
+        var settings = new TagCloudSettings
         {
             Size = new Size(-5, 5),
             PathDirectory = filePath,
@@ -42,7 +42,7 @@ public class CloudBitMapTests
     public void CloudBitMap_ShouldBe_CreatePhotoPng()
     {
         var filePath = "./../../../photos/";
-        var settings = new TagCloudSettings()
+        var settings = new TagCloudSettings
         {
             Size = new Size(30, 300),
             PathDirectory = filePath,
@@ -61,7 +61,7 @@ public class CloudBitMapTests
     public void CloudBitMap_ShouldBe_CreatePhotoBmp()
     {
         var filePath = "./../../../photos/";
-        var settings = new TagCloudSettings()
+        var settings = new TagCloudSettings
         {
             Size = new Size(30, 300),
             PathDirectory = filePath,

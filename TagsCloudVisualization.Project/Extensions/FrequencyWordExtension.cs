@@ -1,6 +1,6 @@
 namespace TagsCloudVisualization.Extensions;
 
-public static class PopularWordExtension
+public static class FrequencyWordExtension
 {
     public static IEnumerable<FrequencyWord> ToFrequencyPopular(this IEnumerable<string> s) => 
         s.

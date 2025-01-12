@@ -1,10 +1,8 @@
 using System.Drawing;
-using System.Text.RegularExpressions;
 using FakeItEasy;
 using FluentAssertions;
 using TagCloud2;
 using TagCloud2.Abstract;
-using TagCloud2.Infrastructure;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.Test;
@@ -13,9 +11,9 @@ namespace TagsCloudVisualization.Tests;
 
 public class FullWorkTests
 {
-    private TagCloudCli _tagCloudCli;
     private IInputData _inputData;
     private Logger _logger;
+    private TagCloudCli _tagCloudCli;
 
     [SetUp]
     public void SetUp()
@@ -81,7 +79,8 @@ public class FullWorkTests
 
         _tagCloudCli.Run();
 
-        _logger.GetData()[0].Should()
+        _logger.GetData()[0]
+            .Should()
             .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.SizeLessThanZero(new Size(0, 0)));
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
@@ -106,7 +105,9 @@ public class FullWorkTests
 
         _tagCloudCli.Run();
 
-        _logger.GetData()[0].Should().Be(Errors.Cloud.ScopeMessage() + ". "+Errors.Cloud.WordOutsideImage());
+        _logger.GetData()[0]
+            .Should()
+            .Be(Errors.Cloud.ScopeMessage() + ". " + Errors.Cloud.WordOutsideImage());
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
 
@@ -129,7 +130,8 @@ public class FullWorkTests
 
         _tagCloudCli.Run();
 
-        _logger.GetData()[0].Should()
+        _logger.GetData()[0]
+            .Should()
             .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.IsNotDirectory("./../../../photos"));
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
