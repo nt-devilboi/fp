@@ -6,7 +6,7 @@ public class ImageErrors
 {
     public string ScopeMessage()
     {
-        return "image has bad settings";
+        return "Image has bad settings";
     }
 
     public string SizeLessThanZero(Size size)

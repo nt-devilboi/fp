@@ -17,7 +17,7 @@ public abstract class AbstractFactoryBitMap(TagCloudSettings cloudSettings)
             .Then(ValidateDirectory)
             .Then(FontExists)
             .Then(CreateBitMap)
-            .RefineError("Image has bad settings");
+            .RefineError(Errors.Image.ScopeMessage());
     }
 
     private Result<TagCloudSettings> ValidateDirectory(TagCloudSettings tagCloudSettings)
