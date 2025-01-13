@@ -10,7 +10,7 @@ jobs:
   build-and-tests:
     runs-on: windows-latest
     env:
-      Path: "./../../../"   
+     
     steps:
     - uses: actions/checkout@v4
    
@@ -19,7 +19,9 @@ jobs:
       with: 
         dotnet-version: 8.0.x
     - name: check MyStem
-      run: echo "path to mystem $Path"
+      run: | 
+        set Path=./../../../;%Path%
+        echo "path to mystem %Path%"
        
     - name: restore dependencies
       run: dotnet restore ./fp.sln
