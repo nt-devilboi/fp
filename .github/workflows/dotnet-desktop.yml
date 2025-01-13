@@ -9,8 +9,6 @@ on:
 jobs:
   build-and-tests:
     runs-on: windows-latest
-    env:
-     
     steps:
     - uses: actions/checkout@v4
    
