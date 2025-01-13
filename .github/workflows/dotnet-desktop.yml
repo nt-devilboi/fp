@@ -18,8 +18,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: check MyStem
       run: | 
-        set Path=./../../../;%Path%
-        echo "path to mystem %Path%"
+        set Path=./../../../;$Path
+        echo "path to mystem $Path"
        
     - name: restore dependencies
       run: dotnet restore ./fp.sln
