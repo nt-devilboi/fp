@@ -9,16 +9,18 @@ on:
 jobs:
   build-and-tests:
     runs-on: windows-latest
+    env:
+      Path: "./../../../"   
     steps:
     - uses: actions/checkout@v4
+   
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with: 
         dotnet-version: 8.0.x
-    - name: Set MyStem
+    - name: check MyStem
       run: echo "path to mystem $Path"
-      env:
-        Path: "./../../../;"    
+       
     - name: restore dependencies
       run: dotnet restore ./fp.sln
     - name: Build
