@@ -1,13 +1,14 @@
+using System.Runtime.Versioning;
 using CommandLine;
 using TagCloud2.Abstract;
 using TagCloud2.Options;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Abstraction;
-using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagCloud2;
 
+[SupportedOSPlatform("windows")]
 internal sealed class TagCloudCli(
     TagCloud tagCloud,
     AppSettings appSettings,
@@ -18,8 +19,10 @@ internal sealed class TagCloudCli(
 {
     public void Run()
     {
-        Parser.Default.ParseArguments<CreateTagCloud>(consoleData.GetArgs())
-            .WithParsed(CreateCloud);
+        Result.Of(() => Parser.Default.ParseArguments<CreateTagCloud>(consoleData.GetArgs())
+                .WithParsed(CreateCloud))
+            .RefineError("Argument invalid")
+            .OnFail(logger.WriteLine);
     }
 
     private void CreateCloud(CreateTagCloud createTagCloud)
@@ -44,13 +47,17 @@ internal sealed class TagCloudCli(
 
     private Result<None> SetParameters(CreateTagCloud createTagCloud)
     {
-        appSettings.TagCloudSettings.PathDirectory = createTagCloud.GetDirectory();
+        var imageFormat = createTagCloud.GetImageFormat().Then(x => appSettings.TagCloudSettings.ImageFormat = x);
+        if (!imageFormat.IsSuccess) return Result.Fail<None>(imageFormat.Error);
+
+        appSettings.TagCloudSettings.PathDirectory = createTagCloud.Directory;
         appSettings.TagCloudSettings.Size = createTagCloud.GetSize();
         appSettings.TagCloudSettings.NamePhoto = createTagCloud.NamePhoto;
-        appSettings.TagCloudSettings.EmSize = int.Parse(createTagCloud.EmSize);
+
         appSettings.TagCloudSettings.ColorWords = createTagCloud.Color;
         appSettings.TagCloudSettings.BackGround = createTagCloud.BackgrondColor;
-        appSettings.TagCloudSettings.ImageFormat = createTagCloud.GetImageFormat();
+        appSettings.TagCloudSettings.EmSize = createTagCloud.EmSize;
+
         appSettings.TagCloudSettings.Font = createTagCloud.Font;
 
         appSettings.WordLoaderSettings.PathTextFile = createTagCloud.PathToWords;

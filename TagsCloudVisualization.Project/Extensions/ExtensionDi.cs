@@ -1,3 +1,4 @@
+using System.Runtime.Versioning;
 using SimpleInjector;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Settings;
@@ -22,6 +23,7 @@ public static class ExtensionDi
     }
 
 
+    [SupportedOSPlatform("windows")]
     public static Container RegisterTextModule(this Container container)
     {
         container.Register<IWordLoader, FileWordLoader>(Lifestyle.Singleton);
@@ -29,6 +31,8 @@ public static class ExtensionDi
         return container;
     }
 
+
+    [SupportedOSPlatform("windows")]
     public static Container RegisterImageModule(this Container container)
     {
         container.Register<AbstractFactoryBitMap, FactoryBitMap>(Lifestyle.Singleton);

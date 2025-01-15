@@ -1,10 +1,11 @@
 using System.Drawing.Text;
+using System.Runtime.Versioning;
 using TagsCloudVisualization.Extensions;
-using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Abstraction;
 
+[SupportedOSPlatform("windows")]
 public abstract class AbstractFactoryBitMap(TagCloudSettings cloudSettings)
 {
     protected abstract ITagCloudImage CreateBitMap(TagCloudSettings cloudSettings);
@@ -19,6 +20,7 @@ public abstract class AbstractFactoryBitMap(TagCloudSettings cloudSettings)
             .Then(CreateBitMap)
             .RefineError(Errors.Image.ScopeMessage());
     }
+
 
     private Result<TagCloudSettings> ValidateDirectory(TagCloudSettings tagCloudSettings)
     {

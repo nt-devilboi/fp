@@ -62,7 +62,7 @@ public class CloudBitMap : ITagCloudImage, ITagCloudSave
 
         Dispose();
     }
-    
+
     private Font GetFont(int emSize)
     {
         return new Font(tagCloudSettings.Font, emSize);

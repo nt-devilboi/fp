@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Drawing;
-using Microsoft.AspNetCore.Http.HttpResults;
 using TagsCloudVisualization.Abstraction;
-using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization;
@@ -27,7 +24,7 @@ public class TagCloud(
         return Validate(cloudLayouter, tagCloudImage)
             .Then(LoadWord)
             .Then(AddWordInCloud)
-            .RefineError("Generate cloud error");
+            .RefineError(Errors.Cloud.ScopeMessage());
     }
 
     private Result<ITagCloudSave> AddWordInCloud(
@@ -40,7 +37,7 @@ public class TagCloud(
             size.Width += 20;
 
             var createdRec = cloudLayouter.PutNextRectangle(size).Then(CheckRecInImage);
-            if (!createdRec.IsSuccess) return Result.Result.Fail<ITagCloudSave>(createdRec.Error);
+            if (!createdRec.IsSuccess) return Result.Fail<ITagCloudSave>(createdRec.Error);
 
             var recCloud = new RectangleTagCloud(createdRec.GetValueOrThrow(), word.Word, emSize);
             data.tagCloudImage.DrawString(recCloud);
@@ -57,7 +54,7 @@ public class TagCloud(
             rectangle.Bottom > tagCloudSettings.Size.Height ||
             rectangle.Left < 0 ||
             rectangle.Top < 0)
-            return Result.Result.Fail<Rectangle>(Errors.Cloud.WordOutsideImage());
+            return Result.Fail<Rectangle>(Errors.Cloud.WordOutsideImage());
 
 
         return rectangle.AsResult();
@@ -66,7 +63,7 @@ public class TagCloud(
 
     private Result<(ITagCloudImage, ICollection<FrequencyWord>)> LoadWord(ITagCloudImage tagCloudImage)
     {
-       return wordLoader.LoadWords()
+        return wordLoader.LoadWords()
             .Then(NotEmpty)
             .Then(Sort)
             .Then(c => (tagCloudImage, c));
@@ -84,9 +81,9 @@ public class TagCloud(
     private Result<ICollection<FrequencyWord>> NotEmpty(ICollection<FrequencyWord> words)
     {
         if (words.Count == 0)
-            return Result.Result.Fail<ICollection<FrequencyWord>>(
+            return Result.Fail<ICollection<FrequencyWord>>(
                 Errors.Stem.TextIsEmptyOrOnlyBoringWords());
 
-        return Result.Result.Ok(words);
+        return Result.Ok(words);
     }
 }

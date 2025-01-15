@@ -4,7 +4,7 @@ public class StemErrors
 {
     public string NotFoundInEnvVar()
     {
-        return "Stem not set in variable 'Path'";
+        return "Stem not set in variable 'Path' or PATH if you use unix-like";
     }
 
     public string TextIsEmptyOrOnlyBoringWords()

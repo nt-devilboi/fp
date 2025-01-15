@@ -1,7 +1,6 @@
 using FakeItEasy;
 using FluentAssertions;
 using TagsCloudVisualization.Abstraction;
-using TagsCloudVisualization.Result;
 
 namespace TagsCloudVisualization.Tests;
 

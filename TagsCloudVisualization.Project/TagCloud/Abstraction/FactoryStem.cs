@@ -1,10 +1,12 @@
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using TagsCloudVisualization.Extensions;
-using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Abstraction;
 
-// забавно но internal здесь не работает 
+[SupportedOSPlatform("windows")]
+[SupportedOSPlatform("linux")]
 public class FactoryStem(WordLoaderSettings wordLoaderSettings)
 {
     private static IStemReader CreateStem(WordLoaderSettings cloudSettings)
@@ -21,7 +23,8 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
 
     private Result<WordLoaderSettings> ValidTextFile(WordLoaderSettings settings)
     {
-        return settings.Validate(x => File.Exists(x.PathTextFile), x => $"File don't exists by dir  {x.PathTextFile}");
+        return settings.Validate(x => File.Exists(x.PathTextFile),
+            x => $"File doesn't exist at the path  {x.PathTextFile}");
     }
 
     private Result<WordLoaderSettings> ValidateMyStem(WordLoaderSettings settings)
@@ -30,10 +33,14 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
     }
 
 
+    [SupportedOSPlatform("windows")]
+    [SupportedOSPlatform("linux")]
     private static bool StemExists()
     {
-        return Environment.GetEnvironmentVariable("Path")!
+        var path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Path" : "PATH";
+
+        return Environment.GetEnvironmentVariable(path)?
             .Split(";")
-            .Any(x => File.Exists(Path.Combine(x, "mystem.exe")));
+            .Any(x => File.Exists(Path.Combine(x, "mystem.exe"))) ?? false;
     }
 }

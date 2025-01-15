@@ -1,5 +1,3 @@
-using TagsCloudVisualization.Result;
-
 namespace TagsCloudVisualization;
 
 public interface IWordLoader

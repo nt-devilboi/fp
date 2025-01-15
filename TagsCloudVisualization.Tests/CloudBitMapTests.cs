@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 using FluentAssertions;
 using TagsCloudVisualization.Settings;
 
-namespace TagsCloudVisualization.Test;
+namespace TagsCloudVisualization.Tests;
 
 public class CloudBitMapTests
 {

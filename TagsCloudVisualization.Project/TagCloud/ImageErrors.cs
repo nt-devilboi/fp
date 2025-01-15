@@ -19,7 +19,6 @@ public class ImageErrors
         return $"Font: '{font}' not exists";
     }
 
-    
 
     public string IsNotDirectory(string path)
     {

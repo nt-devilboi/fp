@@ -6,7 +6,9 @@ using TagCloud2.Abstract;
 using TagCloud2.Infrastructure;
 using TagsCloudVisualization.Extensions;
 
-var serviceCollection = new Container(); // можно было бы для еще более жесткой красоты добавить интерейс под создания все сущностей для реализаций облака для di. типо Container.RegTagCloud.[OnlyMethodsForRegisterTagCLoud].Completed. и дальше отсальное что нужно для di. кароче сделать паттерн строитель. но это overhead.
+var
+    serviceCollection =
+        new Container(); // можно было бы для еще более жесткой красоты добавить интерейс под создания все сущностей для реализаций облака для di. типо Container.RegTagCloud.[OnlyMethodsForRegisterTagCLoud].Completed. и дальше отсальное что нужно для di. кароче сделать паттерн строитель. но это overhead.
 
 serviceCollection.RegisterTagCloud()
     .RegisterLayouter()
