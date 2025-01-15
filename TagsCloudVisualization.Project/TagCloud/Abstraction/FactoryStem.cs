@@ -40,7 +40,7 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
         var path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Path" : "PATH";
 
         return Environment.GetEnvironmentVariable(path)?
-            .Split(";")
+            .Split(Path.PathSeparator)
             .Any(x => File.Exists(Path.Combine(x, "mystem.exe"))) ?? false;
     }
 }
