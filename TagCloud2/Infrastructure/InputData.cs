@@ -1,11 +1,9 @@
-using TagCloud2.Abstract;
-
 namespace TagCloud2.Infrastructure;
 
-public class InputData(string[] args) : IInputData
+public class InputData
 {
-    public string[] GetArgs()
+    public virtual string[] GetArgs()
     {
-        return args;
+        return Environment.GetCommandLineArgs();
     }
 }

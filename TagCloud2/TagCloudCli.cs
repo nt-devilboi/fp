@@ -1,6 +1,7 @@
 using System.Runtime.Versioning;
 using CommandLine;
 using TagCloud2.Abstract;
+using TagCloud2.Infrastructure;
 using TagCloud2.Options;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Abstraction;
@@ -14,7 +15,7 @@ internal sealed class TagCloudCli(
     AppSettings appSettings,
     AbstractFactoryBitMap factoryCloudBitMap,
     ILogger logger,
-    IInputData consoleData)
+    InputData consoleData)
     : ITagCloudController
 {
     public void Run()

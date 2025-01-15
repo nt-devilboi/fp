@@ -2,7 +2,7 @@ using System.Drawing;
 using FakeItEasy;
 using FluentAssertions;
 using TagCloud2;
-using TagCloud2.Abstract;
+using TagCloud2.Infrastructure;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.Test;
@@ -11,7 +11,7 @@ namespace TagsCloudVisualization.Tests;
 
 public class FullWorkTests
 {
-    private IInputData _inputData;
+    private InputData _inputData;
     private Logger _logger;
     private TagCloudCli _tagCloudCli;
 
@@ -27,7 +27,7 @@ public class FullWorkTests
         var factory = new FactoryBitMap(tagCloudSettings);
         _logger = new Logger();
 
-        _inputData = A.Fake<IInputData>();
+        _inputData = A.Fake<InputData>();
         _tagCloudCli = new TagCloudCli(tagCloud,
             new AppSettings(tagCloudSettings, loadWordSettings),
             factory,

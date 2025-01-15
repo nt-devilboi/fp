@@ -16,9 +16,9 @@ serviceCollection.RegisterTagCloud()
     .RegisterImageModule()
     .RegisterSettingsCloud();
 
-
+var x = args;
 serviceCollection.Register<ITagCloudController, TagCloudCli>(Lifestyle.Singleton);
-serviceCollection.Register<IInputData>(() => new InputData(args), Lifestyle.Singleton);
+serviceCollection.Register<InputData>(Lifestyle.Singleton);
 serviceCollection.Register<ILogger, ConsoleLogger>(Lifestyle.Singleton);
 
 var application = serviceCollection.GetInstance<ITagCloudController>();
