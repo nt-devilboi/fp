@@ -44,7 +44,7 @@ public class CreateTagCloud
         return ImageFormatString.ToLower() switch
         {
             "png" => ImageFormat.Png,
-            "jpg" => ImageFormat.Jpeg,
+            "jpeg" => ImageFormat.Jpeg,
             "bpm" => ImageFormat.Bmp,
             _ => Result.Fail<ImageFormat>(
                 $"Image format '{ImageFormatString.ToLower()}' doesn't exist. you can use only png, jpeg or bpm")

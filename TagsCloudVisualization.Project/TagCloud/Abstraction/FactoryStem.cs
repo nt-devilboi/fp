@@ -1,14 +1,16 @@
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
+[assembly: InternalsVisibleTo("TagsCloudVisualization.Tests")]
+
 namespace TagsCloudVisualization.Abstraction;
 
 [SupportedOSPlatform("windows")]
 [SupportedOSPlatform("linux")]
-public class FactoryStem(WordLoaderSettings wordLoaderSettings)
+internal class FactoryStem(WordLoaderSettings wordLoaderSettings)
 {
     private static IStemReader CreateStem(WordLoaderSettings cloudSettings)
     {
@@ -38,9 +40,7 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
     [SupportedOSPlatform("linux")]
     private static bool StemExists()
     {
-        var path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Path" : "PATH";
-
-        return Environment.GetEnvironmentVariable(path)?
+        return Environment.GetEnvironmentVariable("PATH")?
             .Split(Path.PathSeparator)
             .Any(x => File.Exists(Path.Combine(x, "mystem"))) ?? false;
     }

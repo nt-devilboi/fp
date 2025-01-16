@@ -6,19 +6,15 @@ using TagCloud2.Abstract;
 using TagCloud2.Infrastructure;
 using TagsCloudVisualization.Extensions;
 
-var
-    serviceCollection =
-        new Container(); // можно было бы для еще более жесткой красоты добавить интерейс под создания все сущностей для реализаций облака для di. типо Container.RegTagCloud.[OnlyMethodsForRegisterTagCLoud].Completed. и дальше отсальное что нужно для di. кароче сделать паттерн строитель. но это overhead.
-
+var serviceCollection = new Container(); 
 serviceCollection.RegisterTagCloud()
     .RegisterLayouter()
     .RegisterTextModule()
     .RegisterImageModule()
     .RegisterSettingsCloud();
 
-var x = args;
 serviceCollection.Register<ITagCloudController, TagCloudCli>(Lifestyle.Singleton);
-serviceCollection.Register<InputData>(Lifestyle.Singleton);
+serviceCollection.Register(() => new InputData(args), Lifestyle.Singleton);
 serviceCollection.Register<ILogger, ConsoleLogger>(Lifestyle.Singleton);
 
 var application = serviceCollection.GetInstance<ITagCloudController>();

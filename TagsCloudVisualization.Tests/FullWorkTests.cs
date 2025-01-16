@@ -139,7 +139,7 @@ public class FullWorkTests
 
     private void SetLineForReadLine(string[] args)
     {
-        A.CallTo(() => _inputData.GetArgs())
+        A.CallTo(() => _inputData.Args)
             .Returns(args);
     }
 }
