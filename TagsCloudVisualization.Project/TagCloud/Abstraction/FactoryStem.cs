@@ -29,7 +29,7 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
 
     private Result<WordLoaderSettings> ValidateMyStem(WordLoaderSettings settings)
     {
-        return settings.Validate(x => StemExists(), x => Errors.Stem.NotFoundInEnvVar());
+        return settings.Validate(_ => StemExists(), _ => Errors.Stem.NotFoundInEnvVar());
     }
 
 
@@ -41,6 +41,6 @@ public class FactoryStem(WordLoaderSettings wordLoaderSettings)
 
         return Environment.GetEnvironmentVariable(path)?
             .Split(Path.PathSeparator)
-            .Any(x => File.Exists(Path.Combine(x, "mystem.exe"))) ?? false;
+            .Any(x => File.Exists(Path.Combine(x, "mystem"))) ?? false;
     }
 }

@@ -1,4 +1,4 @@
-namespace TagsCloudVisualization;
+namespace TagsCloudVisualization.Abstraction;
 
 public interface IStemReader : IDisposable
 {

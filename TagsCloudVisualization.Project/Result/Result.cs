@@ -1,6 +1,6 @@
 public struct Result<T>
 {
-    public Result(string? error, T value = default)
+    public Result(string error, T value = default!)
     {
         Error = error;
         Value = value;
@@ -11,7 +11,7 @@ public struct Result<T>
         return Result.Ok(v);
     }
 
-    public string? Error { get; }
+    public string Error { get; }
     internal T Value { get; }
 
     public T GetValueOrThrow()

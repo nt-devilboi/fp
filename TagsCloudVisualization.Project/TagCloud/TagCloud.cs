@@ -70,7 +70,7 @@ public class TagCloud(
     }
 
 
-    private ICollection<FrequencyWord> Sort(ICollection<FrequencyWord> words)
+    private static ICollection<FrequencyWord> Sort(ICollection<FrequencyWord> words)
     {
         var wordsSort = words.ToList();
 
@@ -78,11 +78,10 @@ public class TagCloud(
         return wordsSort;
     }
 
-    private Result<ICollection<FrequencyWord>> NotEmpty(ICollection<FrequencyWord> words)
+    private static Result<ICollection<FrequencyWord>> NotEmpty(ICollection<FrequencyWord> words)
     {
         if (words.Count == 0)
-            return Result.Fail<ICollection<FrequencyWord>>(
-                Errors.Stem.TextIsEmptyOrOnlyBoringWords());
+            return Result.Fail<ICollection<FrequencyWord>>(Errors.Stem.TextIsEmptyOrOnlyBoringWords());
 
         return Result.Ok(words);
     }

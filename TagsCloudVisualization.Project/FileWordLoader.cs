@@ -1,8 +1,11 @@
+using System.Runtime.Versioning;
 using TagsCloudVisualization.Abstraction;
 using TagsCloudVisualization.Extensions;
 
 namespace TagsCloudVisualization;
 
+[SupportedOSPlatform("windows")]
+[SupportedOSPlatform("linux")]
 internal sealed class FileWordLoader(
     FactoryStem factorySteamReader)
     : IWordLoader
