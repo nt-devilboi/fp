@@ -1,3 +1,5 @@
+namespace TagsCloudVisualization.Result;
+
 public struct Result<T>
 {
     public Result(string error, T value = default!)

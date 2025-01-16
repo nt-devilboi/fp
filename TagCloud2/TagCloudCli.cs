@@ -5,6 +5,7 @@ using TagCloud2.Infrastructure;
 using TagCloud2.Options;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Abstraction;
+using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagCloud2;

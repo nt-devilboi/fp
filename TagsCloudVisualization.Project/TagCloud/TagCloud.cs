@@ -1,5 +1,6 @@
 using System.Drawing;
 using TagsCloudVisualization.Abstraction;
+using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization;
@@ -37,7 +38,7 @@ public class TagCloud(
             size.Width += 20;
 
             var createdRec = cloudLayouter.PutNextRectangle(size).Then(CheckRecInImage);
-            if (!createdRec.IsSuccess) return Result.Fail<ITagCloudSave>(createdRec.Error);
+            if (!createdRec.IsSuccess) return Result.Result.Fail<ITagCloudSave>(createdRec.Error);
 
             var recCloud = new RectangleTagCloud(createdRec.GetValueOrThrow(), word.Word, emSize);
             data.tagCloudImage.DrawString(recCloud);
@@ -54,7 +55,7 @@ public class TagCloud(
             rectangle.Bottom > tagCloudSettings.Size.Height ||
             rectangle.Left < 0 ||
             rectangle.Top < 0)
-            return Result.Fail<Rectangle>(Errors.Cloud.WordOutsideImage());
+            return Result.Result.Fail<Rectangle>(Errors.Cloud.WordOutsideImage());
 
 
         return rectangle.AsResult();
@@ -81,8 +82,8 @@ public class TagCloud(
     private static Result<ICollection<FrequencyWord>> NotEmpty(ICollection<FrequencyWord> words)
     {
         if (words.Count == 0)
-            return Result.Fail<ICollection<FrequencyWord>>(Errors.Stem.TextIsEmptyOrOnlyBoringWords());
+            return Result.Result.Fail<ICollection<FrequencyWord>>(Errors.Stem.TextIsEmptyOrOnlyBoringWords());
 
-        return Result.Ok(words);
+        return Result.Result.Ok(words);
     }
 }

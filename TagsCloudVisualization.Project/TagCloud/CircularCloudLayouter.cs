@@ -1,5 +1,6 @@
 using System.Drawing;
 using TagsCloudVisualization.Abstraction;
+using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization;
@@ -24,7 +25,7 @@ internal class CircularCloudLayouter : ICloudLayouter
     public Result<Rectangle> PutNextRectangle(Size rectangleSize)
     {
         var result = Validate(_tagCloudSettings.Center);
-        if (!result.IsSuccess) return Result.Fail<Rectangle>(result.Error);
+        if (!result.IsSuccess) return Result.Result.Fail<Rectangle>(result.Error);
 
         Rectangle rec;
         do
@@ -43,12 +44,12 @@ internal class CircularCloudLayouter : ICloudLayouter
 
     private static Result<None> Validate(Point center)
     {
-        var result = Result.Fail<None>("");
+        var result = Result.Result.Fail<None>("");
         if (center.X < 0) result.RefineError("X has value less than 0");
 
         if (center.Y < 0) result.RefineError("Y has value less than 0");
 
-        return string.IsNullOrEmpty(result.Error) ? Result.Ok() : result;
+        return string.IsNullOrEmpty(result.Error) ? Result.Result.Ok() : result;
     }
 
     private Rectangle Sealing(Rectangle rec)

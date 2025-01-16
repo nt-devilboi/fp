@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using TagsCloudVisualization.Extensions;
+using TagsCloudVisualization.Result;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Abstraction;

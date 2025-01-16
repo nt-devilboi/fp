@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
 using CommandLine;
+using TagsCloudVisualization.Result;
 
 namespace TagCloud2.Options;
 
