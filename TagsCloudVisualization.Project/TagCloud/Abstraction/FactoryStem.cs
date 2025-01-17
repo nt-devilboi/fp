@@ -10,7 +10,8 @@ namespace TagsCloudVisualization.Abstraction;
 
 [SupportedOSPlatform("windows")]
 [SupportedOSPlatform("linux")]
-internal class FactoryStem(WordLoaderSettings wordLoaderSettings)
+
+public class FactoryStem(WordLoaderSettings wordLoaderSettings)
 {
     private static IStemReader CreateStem(WordLoaderSettings cloudSettings)
     {

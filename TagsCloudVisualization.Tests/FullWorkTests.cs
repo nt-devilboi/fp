@@ -48,7 +48,7 @@ public class FullWorkTests
             "-e", "50",
             "-c", "yellow",
             "-b", "white",
-            "-f", "bpm",
+            "-f", "bmp",
             "-t", "arial"
         ]);
 
@@ -73,7 +73,7 @@ public class FullWorkTests
             "-e", "50",
             "-c", "yellow",
             "-b", "white",
-            "-f", "bpm",
+            "-f", "bmp",
             "-t", "arial"
         ]);
 
@@ -99,7 +99,7 @@ public class FullWorkTests
             "-e", "50",
             "-c", "yellow",
             "-b", "white",
-            "-f", "bpm",
+            "-f", "bmp",
             "-t", "arial"
         ]);
 
@@ -124,7 +124,7 @@ public class FullWorkTests
             "-e", "50",
             "-c", "yellow",
             "-b", "white",
-            "-f", "bpm",
+            "-f", "bmp",
             "-t", "arial"
         ]);
 
@@ -139,7 +139,7 @@ public class FullWorkTests
 
     private void SetLineForReadLine(string[] args)
     {
-        A.CallTo(() => _inputData.Args)
+        A.CallTo(() => _inputData.GetArgs())
             .Returns(args);
     }
 }

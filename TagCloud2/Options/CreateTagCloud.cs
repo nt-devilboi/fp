@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
@@ -27,6 +28,7 @@ public class CreateTagCloud
     public required int EmSize { get; init; }
 
     [Option('c', "Color", Required = false, HelpText = "Color of words")]
+    [TypeConverter(typeof(EnumConverter))]
     public Color Color { get; init; } = Color.Black;
 
     [Option('b', "background", Required = false, HelpText = "Color of words")]
@@ -45,7 +47,7 @@ public class CreateTagCloud
         {
             "png" => ImageFormat.Png,
             "jpeg" => ImageFormat.Jpeg,
-            "bpm" => ImageFormat.Bmp,
+            "bmp" => ImageFormat.Bmp,
             _ => Result.Fail<ImageFormat>(
                 $"Image format '{ImageFormatString.ToLower()}' doesn't exist. you can use only png, jpeg or bpm")
         };

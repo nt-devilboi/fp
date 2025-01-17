@@ -1,5 +1,6 @@
 using System.Runtime.Versioning;
 using CommandLine;
+using CommandLine.Text;
 using TagCloud2.Abstract;
 using TagCloud2.Infrastructure;
 using TagCloud2.Options;
@@ -21,7 +22,9 @@ internal sealed class TagCloudCli(
 {
     public void Run()
     {
-        Result.Of(() => Parser.Default.ParseArguments<CreateTagCloud>(consoleData.Args)
+    
+
+        Result.Of(() => Parser.Default.ParseArguments<CreateTagCloud>(consoleData.GetArgs())
                 .WithParsed(CreateCloud))
             .RefineError("Argument invalid")
             .OnFail(logger.WriteLine);
