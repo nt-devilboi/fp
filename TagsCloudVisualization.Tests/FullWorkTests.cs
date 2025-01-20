@@ -42,7 +42,7 @@ public class FullWorkTests
         [
             "create",
             "-s", "1920x1680",
-            "-d", "./../../../photos/",
+            "-d", "./photos/",
             "-n", "TestCli",
             "-w", "./../../../text.txt",
             "-e", "50",
@@ -55,8 +55,8 @@ public class FullWorkTests
         _tagCloudCli.Run();
 
         _logger.GetData().Should().BeEmpty();
-        File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeTrue();
-        File.Delete("./../../../photos/tagCloud-(TestCli).Bmp");
+        File.Exists("./photos/tagCloud-(TestCli).Bmp").Should().BeTrue();
+        File.Delete("./photos/tagCloud-(TestCli).Bmp");
     }
 
 
@@ -67,7 +67,7 @@ public class FullWorkTests
         [
             "create",
             "-s", "0x0",
-            "-d", "./../../../photos/",
+            "-d", "./photos/",
             "-n", "TestCli",
             "-w", "./../../../text.txt",
             "-e", "50",
@@ -93,7 +93,7 @@ public class FullWorkTests
         [
             "create",
             "-s", "920x1222",
-            "-d", "./../../../photos/",
+            "-d", "./photos/",
             "-n", "TestCli",
             "-w", "./../../../text.txt",
             "-e", "50",
@@ -118,7 +118,7 @@ public class FullWorkTests
         [
             "create",
             "-s", "0x1680",
-            "-d", "./../../../photos",
+            "-d", "./photos",
             "-n", "TestCli",
             "-w", "./../../../text.txt",
             "-e", "50",
@@ -132,7 +132,7 @@ public class FullWorkTests
 
         _logger.GetData()[0]
             .Should()
-            .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.IsNotDirectory("./../../../photos"));
+            .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.IsNotDirectory("./photos"));
         File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
     }
 
