@@ -26,9 +26,10 @@
 
     <Target Name="MakePhotoDir" BeforeTargets="Build">
         <MakeDir Directories="$(ProjectDir)bin\Debug\net8.0\photos"/>
+        <Copy SourceFiles="$(ProjectDir)Text.txt" DestinationFiles="$(ProjectDir)bin\Debug\net8.0\text.txt"/>
     </Target>
 
-
+    
     <ItemGroup>
         <ProjectReference Include="..\TagCloud2\TagCloud2.csproj"/>
         <ProjectReference Include="..\TagsCloudVisualization.Project\TagsCloudVisualization.Project.csproj"/>

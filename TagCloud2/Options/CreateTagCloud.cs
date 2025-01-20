@@ -29,10 +29,10 @@ public class CreateTagCloud
 
     [Option('c', "Color", Required = false, HelpText = "Color of words")]
     [TypeConverter(typeof(EnumConverter))]
-    public Color Color { get; init; } = Color.Black;
+    public required Color Color { get; init; } = Color.Black;
 
     [Option('b', "background", Required = false, HelpText = "Color of words")]
-    public Color BackgrondColor { get; init; } = Color.White;
+    public required Color BackgrondColor { get; init; } = Color.White;
 
     [Option('f', "format", Required = false, HelpText = "Format of Photo")]
     public string ImageFormatString { private get; init; } = "png";
