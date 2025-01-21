@@ -1,0 +1,20 @@
+using System.Text;
+using TagCloud2.Abstract;
+
+namespace TagsCloudVisualization.Test;
+
+public class Logger : ILogger
+{
+    private readonly StringBuilder _logger = new();
+
+    public void WriteLine(string line)
+    {
+        _logger.Append(line).Append('`');
+    }
+
+    public string[] GetData()
+    {
+        if (_logger.Length == 0) return [];
+        return _logger.ToString().Split('`');
+    }
+}

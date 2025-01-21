@@ -1,0 +1,135 @@
+using System.Drawing;
+using FakeItEasy;
+using FluentAssertions;
+using TagCloud2;
+using TagCloud2.Infrastructure;
+using TagsCloudVisualization.Abstraction;
+using TagsCloudVisualization.Settings;
+using TagsCloudVisualization.Test;
+
+namespace TagsCloudVisualization.Tests;
+
+public class FullWorkTests
+{
+    private Logger _logger;
+
+    [Test]
+    public void TagCloudCli_WorkCorrect()
+    {
+        var cli = SetLineForReadLine(
+        [
+            "create",
+            "-s", "1920x1680",
+            "-d", "./photos/",
+            "-n", "TestCli",
+            "-w", "./text.txt",
+            "-e", "50",
+            "-c", "yellow",
+            "-b", "white",
+            "-f", "bmp",
+            "-t", "arial"
+        ]);
+
+        cli.Run();
+
+        _logger.GetData().Should().BeEmpty();
+        File.Exists("./photos/tagCloud-(TestCli).Bmp").Should().BeTrue();
+        File.Delete("./photos/tagCloud-(TestCli).Bmp");
+    }
+
+
+    [Test]
+    public void TagCloudCli_SizeImage_ShouldBeMoreThanZero()
+    {
+        var cli = SetLineForReadLine(
+        [
+            "create",
+            "-s", "0x0",
+            "-d", "./photos/",
+            "-n", "TestCli",
+            "-w", "./text.txt",
+            "-e", "50",
+            "-c", "yellow",
+            "-b", "white",
+            "-f", "bmp",
+            "-t", "arial"
+        ]);
+
+        cli.Run();
+
+        _logger.GetData()[0]
+            .Should()
+            .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.SizeLessThanZero(new Size(0, 0)));
+        File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
+    }
+
+
+    [Test]
+    public void TagCloudCli_SizeImage_SizeShouldBeMoreForCurrentCountWords()
+    {
+        var cli = SetLineForReadLine(
+        [
+            "create",
+            "-s", "920x1222",
+            "-d", "./photos/",
+            "-n", "TestCli",
+            "-w", "./text.txt",
+            "-e", "50",
+            "-c", "yellow",
+            "-b", "white",
+            "-f", "bmp",
+            "-t", "arial"
+        ]);
+
+        cli.Run();
+
+        _logger.GetData()[0]
+            .Should()
+            .Be(Errors.Cloud.ScopeMessage() + ". " + Errors.Cloud.WordOutsideImage());
+        File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
+    }
+
+    [Test]
+    public void TagCloudCli_SizeImage_WrongSizeAndPathDir()
+    {
+        var cli = SetLineForReadLine(
+        [
+            "create",
+            "-s", "0x1680",
+            "-d", "./photos",
+            "-n", "TestCli",
+            "-w", "./text.txt",
+            "-e", "50",
+            "-c", "yellow",
+            "-b", "white",
+            "-f", "bmp",
+            "-t", "arial"
+        ]);
+
+        cli.Run();
+
+        _logger.GetData()[0]
+            .Should()
+            .Be(Errors.Image.ScopeMessage() + ". " + Errors.Image.IsNotDirectory("./photos"));
+        File.Exists("./../../../photos/tagCloud-(TestCli).Bmp").Should().BeFalse();
+    }
+
+
+    private TagCloudCli SetLineForReadLine(string[] args)
+    {
+        var tagCloudSettings = new TagCloudSettings();
+        var loadWordSettings = new WordLoaderSettings();
+        var wordLoader = new FileWordLoader(new FactoryStem(loadWordSettings));
+        var cloudLayouter = new CircularCloudLayouter(tagCloudSettings);
+
+        var tagCloud = new TagCloud(cloudLayouter, wordLoader, tagCloudSettings, new MeasureString(tagCloudSettings));
+        var factory = new FactoryBitMap(tagCloudSettings);
+        _logger = new Logger();
+        
+        return new TagCloudCli(tagCloud,
+            new AppSettings(tagCloudSettings, loadWordSettings),
+            factory,
+            _logger,
+            new InputData(args));
+    }
+}
