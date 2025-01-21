@@ -24,7 +24,7 @@ internal sealed class TagCloudCli(
     {
         
         
-        Result.Of(() => Parser.Default.ParseArguments<CreateTagCloud>(consoleData.GetArgs())
+        Result.Of(() => Parser.Default.ParseArguments<CreateTagCloud>(consoleData.Args)
                 .WithParsed(CreateCloud))
             .RefineError("Argument invalid")
             .OnFail(logger.WriteLine);

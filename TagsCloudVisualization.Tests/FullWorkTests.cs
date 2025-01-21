@@ -11,34 +11,12 @@ namespace TagsCloudVisualization.Tests;
 
 public class FullWorkTests
 {
-    private InputData _inputData;
     private Logger _logger;
-    private TagCloudCli _tagCloudCli;
-
-    [SetUp]
-    public void SetUp()
-    {
-        var tagCloudSettings = new TagCloudSettings();
-        var loadWordSettings = new WordLoaderSettings();
-        var wordLoader = new FileWordLoader(new FactoryStem(loadWordSettings));
-        var cloudLayouter = new CircularCloudLayouter(tagCloudSettings);
-
-        var tagCloud = new TagCloud(cloudLayouter, wordLoader, tagCloudSettings, new MeasureString(tagCloudSettings));
-        var factory = new FactoryBitMap(tagCloudSettings);
-        _logger = new Logger();
-
-        _inputData = A.Fake<InputData>();
-        _tagCloudCli = new TagCloudCli(tagCloud,
-            new AppSettings(tagCloudSettings, loadWordSettings),
-            factory,
-            _logger,
-            _inputData);
-    }
 
     [Test]
     public void TagCloudCli_WorkCorrect()
     {
-        SetLineForReadLine(
+        var cli = SetLineForReadLine(
         [
             "create",
             "-s", "1920x1680",
@@ -52,7 +30,7 @@ public class FullWorkTests
             "-t", "arial"
         ]);
 
-        _tagCloudCli.Run();
+        cli.Run();
 
         _logger.GetData().Should().BeEmpty();
         File.Exists("./photos/tagCloud-(TestCli).Bmp").Should().BeTrue();
@@ -63,7 +41,7 @@ public class FullWorkTests
     [Test]
     public void TagCloudCli_SizeImage_ShouldBeMoreThanZero()
     {
-        SetLineForReadLine(
+        var cli = SetLineForReadLine(
         [
             "create",
             "-s", "0x0",
@@ -77,7 +55,7 @@ public class FullWorkTests
             "-t", "arial"
         ]);
 
-        _tagCloudCli.Run();
+        cli.Run();
 
         _logger.GetData()[0]
             .Should()
@@ -89,7 +67,7 @@ public class FullWorkTests
     [Test]
     public void TagCloudCli_SizeImage_SizeShouldBeMoreForCurrentCountWords()
     {
-        SetLineForReadLine(
+        var cli = SetLineForReadLine(
         [
             "create",
             "-s", "920x1222",
@@ -103,7 +81,7 @@ public class FullWorkTests
             "-t", "arial"
         ]);
 
-        _tagCloudCli.Run();
+        cli.Run();
 
         _logger.GetData()[0]
             .Should()
@@ -114,7 +92,7 @@ public class FullWorkTests
     [Test]
     public void TagCloudCli_SizeImage_WrongSizeAndPathDir()
     {
-        SetLineForReadLine(
+        var cli = SetLineForReadLine(
         [
             "create",
             "-s", "0x1680",
@@ -128,7 +106,7 @@ public class FullWorkTests
             "-t", "arial"
         ]);
 
-        _tagCloudCli.Run();
+        cli.Run();
 
         _logger.GetData()[0]
             .Should()
@@ -137,9 +115,21 @@ public class FullWorkTests
     }
 
 
-    private void SetLineForReadLine(string[] args)
+    private TagCloudCli SetLineForReadLine(string[] args)
     {
-        A.CallTo(() => _inputData.GetArgs())
-            .Returns(args);
+        var tagCloudSettings = new TagCloudSettings();
+        var loadWordSettings = new WordLoaderSettings();
+        var wordLoader = new FileWordLoader(new FactoryStem(loadWordSettings));
+        var cloudLayouter = new CircularCloudLayouter(tagCloudSettings);
+
+        var tagCloud = new TagCloud(cloudLayouter, wordLoader, tagCloudSettings, new MeasureString(tagCloudSettings));
+        var factory = new FactoryBitMap(tagCloudSettings);
+        _logger = new Logger();
+        
+        return new TagCloudCli(tagCloud,
+            new AppSettings(tagCloudSettings, loadWordSettings),
+            factory,
+            _logger,
+            new InputData(args));
     }
 }
