@@ -49,7 +49,7 @@ public class CreateTagCloud
             "jpeg" => ImageFormat.Jpeg,
             "bmp" => ImageFormat.Bmp,
             _ => Result.Fail<ImageFormat>(
-                $"Image format '{ImageFormatString.ToLower()}' doesn't exist. you can use only png, jpeg or bpm")
+                $"Image format '{ImageFormatString.ToLower()}' doesn't exist. you can use only png, jpeg or bmp")
         };
     }
 
